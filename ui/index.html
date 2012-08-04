@@ -1,1 +1,76 @@
-hello!
+<?php
+
+$stops = array("30th Street Station", "49th Street", "Airport Terminal A", "Airport Terminal B", "Airport Terminal C D", "Airport Terminal E F", "Allegheny", "Allen Lane", "Ambler", "Angora", "Ardmore", "Ardsley", "Bala", "Berwyn", "Bethayres", "Bridesburg", "Bristol", "Bryn Mawr", "Carpenter", "Chalfont", "Chelten Avenue", "Cheltenham", "Chester", "Chestnut Hill East", "Chestnut Hill West", "Churchman's Crossing", "Claymont", "Clifton-Aldan", "Colmar", "Conshohocken", "Cornwells Heights", "Crestmont", "Croydon", "Crum Lynne", "Curtis Park", "Cynwyd", "Darby", "Daylesford", "Delaware Valley College", "Devon", "Downingtown", "Doylestown", "East Falls", "Eastwick", "Eddington", "Eddystone", "Elkins Park", "Elwyn", "Exton", "Fern Rock T C", "Fernwood-Yeadon", "Folcroft", "Forest Hills", "Fort Washington", "Fortuna", "Fox Chase", "Germantown", "Gladstone", "Glenolden", "Glenside", "Gravers", "Gwynedd Valley", "Hatboro", "Haverford", "Highland", "Highland Avenue", "Holmesburg Jct", "Ivy Ridge", "Jenkintown Wyncote", "Langhorne", "Lansdale", "Lansdowne", "Lawndale", "Levittown-Tullytown", "Link Belt", "Main Street", "Malvern", "Manayunk", "Marcus Hook", "Market East", "Meadowbrook", "Media", "Melrose Park", "Merion", "Miquon", "Morton-Rutledge", "Mount Airy", "Moylan-Rose Valley", "Narberth", "Neshaminy Falls", "New Britain", "Newark", "Noble", "Norristown", "Norristown T.C.", "North Broad", "North Hills", "North Philadelphia", "North Philadelphia Amtrak", "North Wales", "Norwood", "Olney", "Oreland", "Overbrook", "Paoli", "Penllyn", "Pennbrook", "Philmont", "Primos", "Prospect Park - Moore", "Queen Lane", "Radnor", "Ridley Park", "Rosemont", "Roslyn", "Rydal", "Ryers", "Secane", "Sedgwick", "Sharon Hill", "Somerton", "Spring Mill", "St. Davids", "St. Martins", "Stenton", "Strafford", "Suburban Station", "Swarthmore", "Tacony", "Temple University", "Thorndale", "Torresdale", "Trenton", "Trevose", "Tulpehocken", "University City", "Upsal", "Villanova", "Wallingford", "Warminster", "Washington Lane", "Wayne", "Wayne Junction", "West Trenton", "Whitford", "Willow Grove", "Wilmington", "Wissahickon", "Wister", "Woodbourne", "Wyndmoor", "Wynnefield Avenue", "Wynnewood", "Yardley");
+
+// build list of flight times
+$times = array();
+
+for ( $i = 5; $i < 22; $i++ ) {
+  for ( $j = 0; $j < 60; $j+=15 ) {
+    $times[] = date('g:ia', strtotime(date('Y-m-d ') . $i . ':' . $j));
+  }
+}
+
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>The Helpful Conductor</title>
+    <meta content="width=device-width, minimum-scale=1.0, maximum-scale=1.0" name="viewport">
+    <meta http-equiv="content-type" content="text/html;charset=utf-8">    
+
+    <link rel="stylesheet" type="text/css" href="http://code.jquery.com/mobile/1.1.1/jquery.mobile-1.1.1.min.css">   
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
+    <script type="text/javascript" src="http://code.jquery.com/mobile/1.1.1/jquery.mobile-1.1.1.min.js"></script>
+    
+    <link rel="stylesheet" type="text/css" href="ui/style.css"> 
+    <script type="text/javascript" src="ui/app.js"></script>    
+  </head>
+  <body>
+    
+    <div id="index" class="page" data-role="page">
+      <blockquote class="rectangle-speech-border">
+        <p>Whattaya want?</p>
+      </blockquote>
+      <p class="question triangle-border left"><a href="#train">Is this the right train?</a></p>
+      <p class="question triangle-border right"><a href="#airport">When do I need to leave for the airport?</a></p>
+    </div>
+    
+    <div id="train" class="page" data-role="page">
+      <blockquote class="rectangle-speech-border" title="Where you goin?">
+        <p>Where you goin?</p>
+      </blockquote>
+      <select id="train_destination">
+        <option value="">Select a stop...</option>
+        <?php foreach ( $stops as $stop ): ?>
+          <option value="<?php echo htmlentities($stop) ?>"><?php echo htmlentities($stop) ?></option>
+        <?php endforeach; ?>
+      </select>
+      
+      <div class="answer">
+        <p>You're lookin for the <b class="route">???</b>. Train <b class="train">???</b>. Should be here in <b class="time">???</b>.</p>
+      </div>
+          
+      <!-- <input name="destination" id="train_destination" placeholder="Destination">
+      <ul id="train_suggestions" data-role="listview" data-inset="true"></ul>   -->      
+    </div>
+    
+    <div id="airport" class="page" data-role="page">
+      <blockquote class="rectangle-speech-border" title="When's your flight?">
+        <p>When's your flight?</p>
+      </blockquote>
+      <select id="airport_time">
+        <option value="">Select a time...</option>
+        <?php foreach ( $times as $time ): ?>
+          <option value="<?php echo htmlentities($time) ?>"><?php echo htmlentities($time) ?></option>
+        <?php endforeach; ?>
+      </select>
+      
+      <div class="answer">
+        <p>Get your ass out the door by <b class="time">???</b>.
+      </div>
+    </div>
+    
+  </body>
+</html>
